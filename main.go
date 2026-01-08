@@ -1,3 +1,9 @@
+// @title Golang CRUD Simple API
+// @version 1.0
+// @description CRUD API using Golang, GORM, PostgreSQL
+// @host localhost:2000
+// @BasePath /
+
 package main
 
 import (
@@ -6,6 +12,9 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	httpSwagger "github.com/swaggo/http-swagger"
+	_ "golang-crud-simple/docs"
+
 	"golang-crud-simple/config"
 	"golang-crud-simple/models"
 	"golang-crud-simple/routes"
@@ -18,6 +27,8 @@ func main() {
 	seeders.SeedUsers()
 
 	router := mux.NewRouter()
+	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
+
 	routes.RegisterRoutes(router)
 
 	fmt.Println("Server berjalan di http://localhost:2000")
